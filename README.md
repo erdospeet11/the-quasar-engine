@@ -28,4 +28,24 @@ post processing
 audio
 physics
 blender import: animations, bones, animations, armatures
-imgui: scene layout,
+imgui: scene layout
+
+-[ ] Vulkan/Metal backend with bindless and RT
+-[ ] macOS/Windows/Linux support
+-[ ] Audio system with spatialization
+-[ ] Input system
+-[ ] C++ scripting with hot-reload
+-[ ] Automatic shader hot reload
+-[ ] Actor model and world serialization/deserialization
+-[ ] Asset system with ref-counting
+-[ ] Fully fledged editor, launcher, and project system
+-[ ] Physics system
+-[ ] Physically based BRDF
+-[ ] Point/Spot/Directional lights
+-[ ] Deferred shading
+-[ ] CPU frustum culling
+-[ ] Raytraced shadows
+-[ ] Procedural sky
+-[ ] FXAA
+-[ ] Debug renderer
+-[ ] HDR rendering

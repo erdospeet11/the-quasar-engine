@@ -33,13 +33,14 @@ namespace engine{
         }
     }
 
-    void Window::pollEvents(){
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
+    bool Window::pollEvent(SDL_Event& event){
+        if (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT) {
                 is_Running = false;
             }
+            return true;
         }
+        return false;
     }
 
     bool Window::isOpen(){
@@ -52,5 +53,9 @@ namespace engine{
 
     SDL_Window* Window::getHandle(){
         return m_handle;
+    }
+
+    SDL_GLContext Window::getContext(){
+        return gl_context;
     }
 }
