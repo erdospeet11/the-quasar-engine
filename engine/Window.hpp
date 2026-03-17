@@ -13,9 +13,10 @@ namespace engine{
         public:
             Window(int w, int h);
             ~Window();
-            void pollEvents();
+            bool pollEvent(SDL_Event& event);
             bool isOpen();
             void swapBuffers();
             SDL_Window* getHandle();
+            SDL_GLContext getContext();
     };
 }
