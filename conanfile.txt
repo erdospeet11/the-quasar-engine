@@ -3,6 +3,7 @@ sdl/3.4.0
 glad/2.0.8
 glm/1.0.1
 imgui/1.91.5-docking
+assimp/5.4.3
 [generators]
 CMakeDeps
 CMakeToolchain

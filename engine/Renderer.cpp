@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "Model.hpp"
 #include <glad/gl.h>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -133,5 +134,28 @@ namespace engine {
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+    }
+
+    void Renderer::renderModel(Model& model, const glm::mat4& transform) {
+        glUseProgram(shaderProgram);
+
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+        
+        float timeValue = SDL_GetTicks() / 1000.0f;
+        glm::mat4 view = glm::lookAt(
+            glm::vec3(0.0f, 2.0f, 5.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 1.0f, 0.0f) 
+        );
+
+        int modelLoc = glGetUniformLocation(shaderProgram, "model");
+        int viewLoc  = glGetUniformLocation(shaderProgram, "view");
+        int projLoc  = glGetUniformLocation(shaderProgram, "projection");
+
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+        model.Draw(shaderProgram);
     }
 }

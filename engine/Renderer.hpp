@@ -1,6 +1,8 @@
 #pragma once
+#include <glm/glm.hpp>
 
 namespace engine {
+    class Model;
     class Renderer{
         private:
             unsigned int shaderProgram;
@@ -12,5 +14,6 @@ namespace engine {
             
             void clear();
             void renderCube();
+            void renderModel(Model& model, const glm::mat4& transform);
     };
 }

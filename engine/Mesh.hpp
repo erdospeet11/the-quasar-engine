@@ -4,56 +4,34 @@
 
 #include <glm/glm.hpp>
 
-#define MAX_BONE_INFLUENCE 4
+namespace engine {
+    struct Vertex {
+        glm::vec3 Position;
+        glm::vec3 Normal;
+        glm::vec2 TexCoords;
+        glm::vec3 Tangent;
+        glm::vec3 Bitangent;
+    };
 
-struct Vertex {
-    // position
-    glm::vec3 Position;
-    // normal
-    glm::vec3 Normal;
-    // texCoords
-    glm::vec2 TexCoords;
-    // tangent
-    glm::vec3 Tangent;
-    // bitangent
-    glm::vec3 Bitangent;
-	//bone indexes which will influence this vertex
-	int m_BoneIDs[MAX_BONE_INFLUENCE];
-	//weights from each bone
-	float m_Weights[MAX_BONE_INFLUENCE];
-};
+    struct Texture {
+        unsigned int id;
+        std::string type;
+        std::string path;
+    };
 
-struct Texture {
-    unsigned int id;
-    std::string type;
-    std::string path;
-};
-
-
-namespace engine{
     class Mesh {
-        public:
-            // mesh data
-            std::vector<Vertex>       vertices;
-            std::vector<unsigned int> indices;
-            std::vector<Texture>      textures;
+    public:
+        std::vector<Vertex>       vertices;
+        std::vector<unsigned int> indices;
+        std::vector<Texture>      textures;
 
-            // constructor
-            Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
-            {
-                this->vertices = vertices;
-                this->indices = indices;
-                this->textures = textures;
+        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+        ~Mesh() = default;
 
-                // now that we have all the required data, set the vertex buffers and its attribute pointers.
-                setupMesh();
-            }
-            //TODO: Implement Shader
-            //void Draw(Shader &shader);
-        private:
-            //  render data
-            unsigned int VAO, VBO, EBO;
-
-            void setupMesh();
-    };  
-};
+        void Draw(unsigned int shaderProgram);
+        unsigned int VAO;
+    private:
+        unsigned int VBO, EBO;
+        void setupMesh();
+    };
+}

@@ -5,6 +5,9 @@
 #include "engine/Window.hpp"
 #include "engine/Renderer.hpp"
 #include "engine/Input.hpp"
+#include "engine/Model.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
@@ -78,7 +81,24 @@ int main() {
         }
 
         renderer.clear();
-        renderer.renderCube();
+        
+        glm::mat4 transform = glm::mat4(1.0f);
+        //float timeValue = SDL_GetTicks() / 1000.0f;
+        //transform = glm::rotate(transform, timeValue * glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(1.0f));
+        
+        static engine::Model* importedModel = nullptr;
+        static bool attemptedLoad = false;
+        
+        if (!attemptedLoad) {
+            std::string modelPath = std::string(GAME_SOURCE_DIR) + "models/test-scene.glb";
+            importedModel = new engine::Model(modelPath); 
+            attemptedLoad = true;
+        }
+
+        if (importedModel && !importedModel->meshes.empty()) {
+            renderer.renderModel(*importedModel, transform);
+        }
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

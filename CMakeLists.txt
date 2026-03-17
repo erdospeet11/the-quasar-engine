@@ -6,6 +6,7 @@ find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
 find_package(imgui REQUIRED)
+find_package(assimp REQUIRED)
 
 add_executable(VoidEngine 
     game/main.cpp
@@ -15,9 +16,14 @@ add_executable(VoidEngine
     engine/Input.cpp
     engine/Renderer.hpp
     engine/Renderer.cpp
+    engine/Mesh.hpp
+    engine/Mesh.cpp
+    engine/Model.hpp
+    engine/Model.cpp
     third_party/imgui/bindings/imgui_impl_sdl3.cpp
     third_party/imgui/bindings/imgui_impl_opengl3.cpp
 )
 
-target_link_libraries(VoidEngine PRIVATE SDL3::SDL3 glad::glad glm::glm imgui::imgui)
+target_link_libraries(VoidEngine PRIVATE SDL3::SDL3 glad::glad glm::glm imgui::imgui assimp::assimp)
 target_include_directories(VoidEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} third_party/imgui/bindings)
+target_compile_definitions(VoidEngine PRIVATE "GAME_SOURCE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/game/\"")
